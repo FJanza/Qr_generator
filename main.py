@@ -1,45 +1,33 @@
+import os
 import qrcode
 from PIL import Image
 
 
-#-------------------------------DEFINICIÓN DEL QRGenerator--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-def Qr():
-    Cadena = input("Introduzca el texto para el codigo Qr: ")     #se ingresa el link que se abrira cuando se escanee el qr
-    imagen = qrcode.make(Cadena)
+def QR():
+    """Definición del QRGenerator."""
+
+    cadena = input("Introduzca el link para el codigo QR: ")
+    imagen = qrcode.make(cadena)
 
     nombre_imagen = input("Introduzca el nombre que tendra el archivo imagen: ") + '.png'
-    path = 'Archivos_Qr/' + nombre_imagen
-    archivo_imagen = open(path,'wb')
-    imagen.save(archivo_imagen)
-    archivo_imagen.close()
+    path = "Archivos_QR/" + nombre_imagen
 
-    return 0
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    os.makedirs(os.path.dirname(path))  # crea el directorio si no existe
 
-#-------------------------------DEFINICIÓN DEL MAIN--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    with open(path, 'wb') as archivo_imagen:
+        imagen.save(archivo_imagen)
+
+
 def main():
-    condition = True
+    """Definición del main."""
 
-    while condition:
-        Qr()
-        
+    repetir = True
+
+    while repetir:
+        QR()
         opcion = input('Se desea crear mas codigos Qr Y/N: ')
-
-        if(opcion == 'Y'):
-            condition = True
-        
-        if(opcion == 'N'):
-            condition = False
-
-        if(opcion != 'Y' and opcion != 'N'):
-            condition = False    
+        repetir = True if opcion == 'Y' else False
 
 
-
-    return 0
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-#----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 if __name__ == '__main__':
     main()
-#---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
